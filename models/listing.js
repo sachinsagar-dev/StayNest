@@ -23,6 +23,11 @@ const listingSchema=new Schema({
         ref:"Review",
     },
     ],
+
+    owner:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
+    },
 });
 listingSchema.pre("save", function() {
     if (!this.image || !this.image.url) {
