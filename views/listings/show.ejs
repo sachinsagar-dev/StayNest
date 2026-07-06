@@ -83,9 +83,8 @@
             <div class="card review-card h-100">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
-                  <div class="reviewer-avatar me-2">G</div>
                   <div>
-                    <p class="mb-0 fw-bold">@ <%= review.author.username  %></p>
+                    <p class="mb-0 fw-bold">@ <%= review.author.username %></p>
                     <p class="mb-0 text-muted small">
                       <%= review.createdAt.toLocaleDateString("en-IN", { month: "long", year: "numeric" }) %>
                     </p>
