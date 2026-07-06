@@ -16,16 +16,19 @@
             <p class="card-text"><%= listing.country  %></p>
         </div>
        </div>
-    
-     <div class="btns">
-       <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-2 edit-btn">Edit</a>
-       <form method="POST" action="/listings/<%= listing._id  %>?_method=DELETE">
+      <% if(currUser && listing.owner.equals(currUser._id)) { %>
+       
+        <div class="btns">
+         <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-2 edit-btn">Edit</a>
+         <form method="POST" action="/listings/<%= listing._id  %>?_method=DELETE">
           <button class="btn btn-dark  offset-4">Delete</button>
-       </form>
-     </div> 
-
+         </form>
+       </div> 
+     <% } %>  
+     
 
      <!-- review section -->
+      <% if(currUser) { %>
      <div class="col-8 offset-3 mb-3">
         <hr/>
         <h4>Leave a Review</h4>
@@ -69,6 +72,7 @@
         </form>
 
         <hr/><hr/>
+        <% } %>
 
         <% if(listing.reviews.length > 0) { %>
         <h4 class="mb-3">All Reviews</h4>
@@ -81,7 +85,7 @@
                 <div class="d-flex align-items-center mb-2">
                   <div class="reviewer-avatar me-2">G</div>
                   <div>
-                    <p class="mb-0 fw-bold">Guest</p>
+                    <p class="mb-0 fw-bold">@ <%= review.author.username  %></p>
                     <p class="mb-0 text-muted small">
                       <%= review.createdAt.toLocaleDateString("en-IN", { month: "long", year: "numeric" }) %>
                     </p>
