@@ -8,11 +8,14 @@ const listingSchema=new Schema({
       required:true,
     },
     description:String,
-    image:{
-        
-        url:{type:String,
-            default:DEFAULT_IMAGE
-            }
+    image: {
+     url: {
+        type: String,
+        default: DEFAULT_IMAGE,
+      },
+     filename: {
+        type: String,
+     },
     },
     price:Number,
     location:String,
