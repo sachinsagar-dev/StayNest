@@ -1,5 +1,6 @@
 
 const Listing=require("../models/listing");
+const axios=require("axios");
 //index route
 module.exports.index=async(req,res)=>{
     const allListings=await Listing.find({});
@@ -39,6 +40,8 @@ module.exports.createListing=async(req,res,next)=>{
      const filename=req.file.filename;
      newListing.image={url,filename};
     }
+
+    
     await newListing.save(); 
     req.flash("success","New Listing Created");
     res.redirect("/listings");

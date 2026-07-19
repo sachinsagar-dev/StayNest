@@ -81,3 +81,8 @@
   .btns{
    display: flex;
   }
+
+  #map { 
+   height: 400px;
+   width:80vh;   
+}
