@@ -2,40 +2,38 @@
 const Listing=require("../models/listing");
 const axios=require("axios");
 //index route
-module.exports.index = async (req, res) => {
-    const { location, country, minPrice, maxPrice } = req.query;
+module.exports.index=async(req,res)=>{
+    const {location,country,minPrice,maxPrice}=req.query;
+    const filter={};
 
-    const filter = {};
-
-    if (location) {
-        filter.location = {
-            $regex: location,
-            $options: "i"
+    if(location){
+        filter.location={
+            $regex:location,
+            $options:"i"
         };
     }
 
-    if (country) {
-        filter.country = {
-            $regex: country,
-            $options: "i"
+    if(country){
+        filter.country={
+            $regex:country,
+            $options:"i"
         };
     }
 
-    if (minPrice || maxPrice) {
-        filter.price = {};
+    const min=Number(minPrice);
+    const max=Number(maxPrice);
 
-        if (minPrice) {
-            filter.price.$gte = Number(minPrice);
-        }
-
-        if (maxPrice) {
-            filter.price.$lte = Number(maxPrice);
-        }
+    if(minPrice && Number.isFinite(min) && min>=0){
+        filter.price={$gte:min};
     }
 
-    const allListings = await Listing.find(filter);
+    if(maxPrice && Number.isFinite(max) && max>=0){
+        filter.price=filter.price || {};
+        filter.price.$lte=max;
+    }
 
-    res.render("listings/index.ejs", { allListings });
+    const allListings=await Listing.find(filter);
+    res.render("listings/index.ejs",{allListings,location,country,minPrice,maxPrice});
 };
 
 module.exports.renderNewForm=(req,res)=>{
