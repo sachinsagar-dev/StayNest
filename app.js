@@ -1,10 +1,8 @@
-if(process.env.NODE_ENV!="production"){
-   require('dotenv').config();
-}
+require("dotenv").config();
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
-const MONGO_URL= "mongodb://127.0.0.1:27017/StayNest";
+const MONGO_URL = process.env.MONGO_URL;
 const path=require("path");
 const methodOverride=require("method-override");
 const ejsMate=require("ejs-mate");
@@ -24,7 +22,7 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 const sessionOptions={
-  secret:"mysupersecretcode",
+  secret: process.env.SESSION_SECRET,
   resave:false,
   saveUninitialized:true,
   cookie:{
