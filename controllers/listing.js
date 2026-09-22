@@ -2,10 +2,40 @@
 const Listing=require("../models/listing");
 const axios=require("axios");
 //index route
-module.exports.index=async(req,res)=>{
-    const allListings=await Listing.find({});
-    res.render("listings/index.ejs",{allListings});
-   
+module.exports.index = async (req, res) => {
+    const { location, country, minPrice, maxPrice } = req.query;
+
+    const filter = {};
+
+    if (location) {
+        filter.location = {
+            $regex: location,
+            $options: "i"
+        };
+    }
+
+    if (country) {
+        filter.country = {
+            $regex: country,
+            $options: "i"
+        };
+    }
+
+    if (minPrice || maxPrice) {
+        filter.price = {};
+
+        if (minPrice) {
+            filter.price.$gte = Number(minPrice);
+        }
+
+        if (maxPrice) {
+            filter.price.$lte = Number(maxPrice);
+        }
+    }
+
+    const allListings = await Listing.find(filter);
+
+    res.render("listings/index.ejs", { allListings });
 };
 
 module.exports.renderNewForm=(req,res)=>{
