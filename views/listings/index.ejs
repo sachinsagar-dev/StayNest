@@ -113,6 +113,26 @@
        </div>
     </div>
    
+    <div class="container mt-4 mb-4">
+        <form action="/listings" method="GET" class="row g-2">
+            <div class="col-md-3">
+                <input type="text" name="location" class="form-control" placeholder="Location">
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="country" class="form-control" placeholder="Country">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="minPrice" class="form-control" placeholder="Min Price">
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="maxPrice" class="form-control" placeholder="Max Price">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-dark w-100">Search</button>
+            </div>
+        </form>
+    </div>
+   
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
         <% for (let listing of allListings) { %>
             <a href="/listings/<%= listing._id  %>" class="listing-link">
