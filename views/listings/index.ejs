@@ -116,16 +116,16 @@
     <div class="container mt-4 mb-4">
         <form action="/listings" method="GET" class="row g-2">
             <div class="col-md-3">
-                <input type="text" name="location" class="form-control" placeholder="Location">
+                <input type="text" name="location" class="form-control" placeholder="Location" value="<%= location || "" %>">
             </div>
             <div class="col-md-3">
-                <input type="text" name="country" class="form-control" placeholder="Country">
+                <input type="text" name="country" class="form-control" placeholder="Country" value="<%= country || "" %>">
             </div>
             <div class="col-md-2">
-                <input type="number" name="minPrice" class="form-control" placeholder="Min Price">
+                <input type="number" name="minPrice" class="form-control" placeholder="Min Price" min="0" value="<%= minPrice || "" %>">
             </div>
             <div class="col-md-2">
-                <input type="number" name="maxPrice" class="form-control" placeholder="Max Price">
+                <input type="number" name="maxPrice" class="form-control" placeholder="Max Price" min="0" value="<%= maxPrice || "" %>">
             </div>
             <div class="col-md-2">
                 <button class="btn btn-dark w-100">Search</button>
