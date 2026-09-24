@@ -150,6 +150,30 @@
        </div>
       <% } %>
     </div>
+
+    <% if(totalPages > 1){ %>
+        <nav class="mt-4 mb-4" aria-label="Listings pagination">
+            <ul class="pagination justify-content-center">
+                <% if(currentPage > 1){ %>
+                    <li class="page-item">
+                        <a class="page-link" href="/listings?page=<%= currentPage - 1 %>&location=<%= encodeURIComponent(location || '') %>&country=<%= encodeURIComponent(country || '') %>&minPrice=<%= encodeURIComponent(minPrice || '') %>&maxPrice=<%= encodeURIComponent(maxPrice || '') %>">Previous</a>
+                    </li>
+                <% } %>
+
+                <% for(let page=1; page<=totalPages; page++){ %>
+                    <li class="page-item <%= page === currentPage ? 'active' : '' %>">
+                        <a class="page-link" href="/listings?page=<%= page %>&location=<%= encodeURIComponent(location || '') %>&country=<%= encodeURIComponent(country || '') %>&minPrice=<%= encodeURIComponent(minPrice || '') %>&maxPrice=<%= encodeURIComponent(maxPrice || '') %>"><%= page %></a>
+                    </li>
+                <% } %>
+
+                <% if(currentPage < totalPages){ %>
+                    <li class="page-item">
+                        <a class="page-link" href="/listings?page=<%= currentPage + 1 %>&location=<%= encodeURIComponent(location || '') %>&country=<%= encodeURIComponent(country || '') %>&minPrice=<%= encodeURIComponent(minPrice || '') %>&maxPrice=<%= encodeURIComponent(maxPrice || '') %>">Next</a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+    <% } %>
      
     <script>
     let taxSwitch=document.getElementById("switchCheckDefault");
