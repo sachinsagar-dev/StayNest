@@ -40,6 +40,12 @@ module.exports.renderNewForm=(req,res)=>{
     res.render("listings/new.ejs");
 };
 
+//my listings
+module.exports.myListings=async(req,res)=>{
+    const myListings=await Listing.find({owner:req.user._id});
+    res.render("listings/myListings.ejs",{myListings});
+};
+
 //show route
 
 module.exports.showListing=async(req,res)=>{
