@@ -22,6 +22,8 @@ router
 //new route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
 
+router.get("/my-listings",isLoggedIn,wrapAsync(listingController.myListings));
+
 router
   .route("/:id")
   .get(wrapAsync(listingController.showListing))
