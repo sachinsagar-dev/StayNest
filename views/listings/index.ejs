@@ -3,12 +3,19 @@
     <style>
         #filters{
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    padding: 1.25rem 1rem 0.75rem;
+    scrollbar-width: thin;
     }
     .filter{
+        flex: 0 0 auto;
+        min-width: 4.5rem;
         text-align: center;
-        margin-right: 2rem;
-        margin-top: 2rem;
+        margin: 0;
     }
     .filter:hover{
         opacity: 0.8;
@@ -21,10 +28,18 @@
       display: none;
     }
     .tax-toogle{
+      flex: 0 0 auto;
       border: 1px solid black;
       border-radius: 1rem;
       height: 3.5rem;
       padding: 1rem;
+      margin-left: 0.5rem;
+    }
+    #filters::-webkit-scrollbar{
+      height: 5px;
+    }
+    #filters::-webkit-scrollbar-thumb{
+      border-radius: 10px;
     }
     </style>
 
