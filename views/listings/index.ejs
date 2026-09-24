@@ -215,6 +215,37 @@
     <% } %>
      
     <script>
+    const categoryScroll=document.querySelector(".category-scroll");
+    let autoScroll=true;
+    let scrollDirection=1;
+    let lastTime=0;
+
+    function moveCategories(time){
+      if(!lastTime) lastTime=time;
+      const elapsed=time-lastTime;
+      lastTime=time;
+
+      if(autoScroll && categoryScroll.scrollWidth>categoryScroll.clientWidth){
+        categoryScroll.scrollLeft += scrollDirection * elapsed * 0.025;
+
+        if(categoryScroll.scrollLeft >= categoryScroll.scrollWidth-categoryScroll.clientWidth){
+          scrollDirection=-1;
+        }
+
+        if(categoryScroll.scrollLeft <= 0){
+          scrollDirection=1;
+        }
+      }
+
+      requestAnimationFrame(moveCategories);
+    }
+
+    categoryScroll.addEventListener("pointerdown",()=>{
+      autoScroll=false;
+    });
+
+    requestAnimationFrame(moveCategories);
+
     let taxSwitch=document.getElementById("switchCheckDefault");
     taxSwitch.addEventListener("click",()=>{
       let taxInfo=document.getElementsByClassName("tax-info");
