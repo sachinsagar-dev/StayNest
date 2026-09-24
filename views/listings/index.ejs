@@ -32,7 +32,7 @@
     .filter p{
         font-size: 0.8rem;
     }
-    .tax-info{
+    .tax-price{
       display: none;
     }
     .tax-toogle{
@@ -180,8 +180,12 @@
                         <div class="card-body">
                             <p class="card-text">
                                 <b><%= listing.title %></b><br/>
-                                &#x20B9;<%= listing.price.toLocaleString("en-IN") %>/night
-                                <i class="tax-info">&nbsp; &nbsp;+18% GST</i>
+                                <span class="base-price">
+                                    &#x20B9;<%= listing.price.toLocaleString("en-IN") %>/night
+                                </span>
+                                <span class="tax-price">
+                                    &#x20B9;<%= (listing.price * 1.18).toLocaleString("en-IN", {maximumFractionDigits: 2}) %>/night
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -250,14 +254,13 @@
     });
 
     let taxSwitch=document.getElementById("switchCheckDefault");
-    taxSwitch.addEventListener("click",()=>{
-      let taxInfo=document.getElementsByClassName("tax-info");
-      for(info of taxInfo){
-        if(info.style.display!="inline"){
-          info.style.display="inline";
-        }else{
-          info.style.display="none";
-        }
+    taxSwitch.addEventListener("change",()=>{
+      let basePrices=document.getElementsByClassName("base-price");
+      let taxPrices=document.getElementsByClassName("tax-price");
+
+      for(let i=0;i<basePrices.length;i++){
+        basePrices[i].style.display=taxSwitch.checked ? "none" : "inline";
+        taxPrices[i].style.display=taxSwitch.checked ? "inline" : "none";
       }
     });
     </script>
