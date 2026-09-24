@@ -122,3 +122,17 @@
     height:16rem;
   }
 }
+
+
+/* Pagination and footer link colors */
+.pagination .page-link{
+  color:#fe424d;
+}
+.pagination .page-item.active .page-link{
+  background-color:#fe424d;
+  border-color:#fe424d;
+  color:white;
+}
+.f-info-links a{
+  color:black;
+}
