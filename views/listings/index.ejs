@@ -218,33 +218,36 @@
     const categoryScroll=document.querySelector(".category-scroll");
     let autoScroll=true;
     let scrollDirection=1;
-    let lastTime=0;
 
-    function moveCategories(time){
-      if(!lastTime) lastTime=time;
-      const elapsed=time-lastTime;
-      lastTime=time;
-
-      if(autoScroll && categoryScroll.scrollWidth>categoryScroll.clientWidth){
-        categoryScroll.scrollLeft += scrollDirection * elapsed * 0.025;
-
-        if(categoryScroll.scrollLeft >= categoryScroll.scrollWidth-categoryScroll.clientWidth){
-          scrollDirection=-1;
-        }
-
-        if(categoryScroll.scrollLeft <= 0){
-          scrollDirection=1;
-        }
+    const categoryTimer=setInterval(()=>{
+      if(!autoScroll || !categoryScroll){
+        return;
       }
 
-      requestAnimationFrame(moveCategories);
-    }
+      const maxScroll=categoryScroll.scrollWidth-categoryScroll.clientWidth;
+
+      if(maxScroll<=0){
+        return;
+      }
+
+      categoryScroll.scrollLeft += scrollDirection;
+
+      if(categoryScroll.scrollLeft >= maxScroll){
+        scrollDirection=-1;
+      }
+
+      if(categoryScroll.scrollLeft <= 0){
+        scrollDirection=1;
+      }
+    },30);
 
     categoryScroll.addEventListener("pointerdown",()=>{
       autoScroll=false;
     });
 
-    requestAnimationFrame(moveCategories);
+    categoryScroll.addEventListener("wheel",()=>{
+      autoScroll=false;
+    });
 
     let taxSwitch=document.getElementById("switchCheckDefault");
     taxSwitch.addEventListener("click",()=>{
