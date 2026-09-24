@@ -4,6 +4,9 @@ const axios=require("axios");
 //index route
 module.exports.index=async(req,res)=>{
     const {location,country,minPrice,maxPrice}=req.query;
+    const page=Number(req.query.page) || 1;
+    const limit=6;
+    const skip=(page-1)*limit;
     const filter={};
 
     if(location){
@@ -32,8 +35,22 @@ module.exports.index=async(req,res)=>{
         filter.price.$lte=max;
     }
 
-    const allListings=await Listing.find(filter);
-    res.render("listings/index.ejs",{allListings,location,country,minPrice,maxPrice});
+    const totalListings=await Listing.countDocuments(filter);
+    const totalPages=Math.ceil(totalListings/limit);
+
+    const allListings=await Listing.find(filter)
+        .skip(skip)
+        .limit(limit);
+
+    res.render("listings/index.ejs",{
+        allListings,
+        location,
+        country,
+        minPrice,
+        maxPrice,
+        currentPage:page,
+        totalPages
+    });
 };
 
 module.exports.renderNewForm=(req,res)=>{
