@@ -4,9 +4,8 @@ const axios=require("axios");
 //index route
 module.exports.index=async(req,res)=>{
     const {location,country,minPrice,maxPrice}=req.query;
-    const page=Number(req.query.page) || 1;
+    const requestedPage=Math.max(Number(req.query.page) || 1,1);
     const limit=6;
-    const skip=(page-1)*limit;
     const filter={};
 
     if(location){
@@ -25,20 +24,24 @@ module.exports.index=async(req,res)=>{
 
     const min=Number(minPrice);
     const max=Number(maxPrice);
+    const invalidPriceRange=minPrice && maxPrice &&
+        Number.isFinite(min) && Number.isFinite(max) && min>max;
 
-    if(minPrice && Number.isFinite(min) && min>=0){
+    if(minPrice && Number.isFinite(min) && min>=0 && !invalidPriceRange){
         filter.price={$gte:min};
     }
 
-    if(maxPrice && Number.isFinite(max) && max>=0){
+    if(maxPrice && Number.isFinite(max) && max>=0 && !invalidPriceRange){
         filter.price=filter.price || {};
         filter.price.$lte=max;
     }
 
-    const totalListings=await Listing.countDocuments(filter);
+    const totalListings=invalidPriceRange ? 0 : await Listing.countDocuments(filter);
     const totalPages=Math.ceil(totalListings/limit);
+    const currentPage=totalPages ? Math.min(requestedPage,totalPages) : 1;
+    const skip=(currentPage-1)*limit;
 
-    const allListings=await Listing.find(filter)
+    const allListings=invalidPriceRange ? [] : await Listing.find(filter)
         .skip(skip)
         .limit(limit);
 
@@ -48,8 +51,9 @@ module.exports.index=async(req,res)=>{
         country,
         minPrice,
         maxPrice,
-        currentPage:page,
-        totalPages
+        currentPage,
+        totalPages,
+        invalidPriceRange
     });
 };
 
