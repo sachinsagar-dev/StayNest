@@ -86,3 +86,39 @@
    height: 400px;
    width:80vh;   
 }
+
+/* Responsive listing cards */
+.listing-card{
+  width:100%;
+}
+
+.card-img-top{
+  height:20rem;
+}
+
+@media (max-width: 576px){
+  .navbar{
+    height:auto;
+    padding-top:0.75rem;
+    padding-bottom:0.75rem;
+  }
+
+  #filters{
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    padding-bottom:0.5rem;
+  }
+
+  .filter{
+    flex:0 0 auto;
+    margin-right:1.25rem;
+  }
+
+  .tax-toogle{
+    flex:0 0 auto;
+  }
+
+  .card-img-top{
+    height:16rem;
+  }
+}
