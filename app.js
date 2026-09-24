@@ -63,9 +63,9 @@ app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 
-/* app.get("/",(req,res)=>{
-    res.send("Hi,i am root");
-}); */
+app.get("/",(req,res)=>{
+    res.redirect("/listings");
+});
 
  app.use("/listings",listingRouter);
  app.use("/listings/:id/reviews",reviewRouter); //parent route
