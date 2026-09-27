@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     asset_folder: 'StayNest',
-   // format:["png","jpg","jpeg"], // supports promises as well
+    format: ['jpg', 'jpeg', 'png', 'webp'],
   },
 });
 
