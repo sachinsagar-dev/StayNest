@@ -27,6 +27,49 @@
      <% } %>  
      
 
+     <% if(currUser && !listing.owner._id.equals(currUser._id)) { %>
+        <div class="col-8 offset-2 mt-4 mb-4">
+            <div class="card p-3">
+                <h4>Book this stay</h4>
+                <p class="text-muted mb-3">&#x20B9;<%= listing.price.toLocaleString("en-IN") %> per night · No payment required</p>
+                <form action="/bookings/listings/<%= listing._id %>" method="POST">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label for="checkIn" class="form-label">Check-in</label>
+                            <input type="date" id="checkIn" name="checkIn" class="form-control" required>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="checkOut" class="form-label">Check-out</label>
+                            <input type="date" id="checkOut" name="checkOut" class="form-control" required>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-danger w-100">Book</button>
+                        </div>
+                    </div>
+                </form>
+                <small class="text-muted mt-2">Your reservation is confirmed after availability checks. Payment is not collected.</small>
+            </div>
+        </div>
+        <script>
+            const checkInInput=document.getElementById("checkIn");
+            const checkOutInput=document.getElementById("checkOut");
+            const today=new Date();
+            const todayString=new Date(Date.UTC(today.getFullYear(),today.getMonth(),today.getDate())).toISOString().slice(0,10);
+            checkInInput.min=todayString;
+            checkOutInput.min=todayString;
+            checkInInput.addEventListener("change",()=>{
+                checkOutInput.min=checkInInput.value || todayString;
+                if(checkOutInput.value && checkOutInput.value<=checkInInput.value){
+                    checkOutInput.value="";
+                }
+            });
+        </script>
+     <% } else if(!currUser) { %>
+        <div class="col-8 offset-2 mt-4 mb-4">
+            <p><a href="/login">Log in</a> to book this stay.</p>
+        </div>
+     <% } %>
+
      <!-- review section -->
       <% if(currUser) { %>
      <div class="col-8 offset-3 mb-3">
