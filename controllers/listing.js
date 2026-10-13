@@ -1,5 +1,6 @@
 
 const Listing=require("../models/listing");
+const Booking=require("../models/booking");
 const axios=require("axios");
 //index route
 module.exports.index=async(req,res)=>{
@@ -135,6 +136,7 @@ module.exports.renderEditForm=async(req,res)=>{
  module.exports.destroyListing=async(req,res)=>{
      let {id}=req.params;
      let deletedListing=await Listing.findByIdAndDelete(id);
+     await Booking.deleteMany({listing:id});
      req.flash("success","Listing Deleted successfully");
      res.redirect("/listings");
   };
